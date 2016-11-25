@@ -1,4 +1,4 @@
-package com.github.herowzz.dayIdGen;
+package com.github.herowzz.dayIdGen.server;
 
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;

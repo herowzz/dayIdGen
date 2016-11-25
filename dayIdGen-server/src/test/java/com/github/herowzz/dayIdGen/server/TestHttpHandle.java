@@ -1,4 +1,4 @@
-package com.github.herowzz.dayIdGen;
+package com.github.herowzz.dayIdGen.server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
