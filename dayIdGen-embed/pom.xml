@@ -11,4 +11,13 @@
 	<artifactId>dayIdGen-embed</artifactId>
 	<name>dayIdGen-embed</name>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.25</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
 </project>
