@@ -1,5 +1,7 @@
 package com.github.herowzz.dayIdGen.test;
 
+import java.util.concurrent.CountDownLatch;
+
 import com.alibaba.druid.pool.DruidDataSource;
 import com.github.herowzz.dayIdGen.embed.DayIdGen;
 import com.github.herowzz.dayIdGen.embed.dao.IdDao;
@@ -31,12 +33,30 @@ public class TestDayIdGen {
 		idGen.setIdDao(idDao);
 		idGen.setMinDigit(5);
 		idGen.setPrefix("RK");
-		idGen.setName("aaaaaaaa");
+		idGen.setName("ccc");
 
-		for (int i = 0; i < 100; i++) {
-			String id = idGen.getNextDateId();
-			System.out.println(id);
+		CountDownLatch latch = new CountDownLatch(200);
+		long begin = System.currentTimeMillis();
+		for (int i = 0; i < 200; i++) {
+			new Thread(() -> {
+				for (int j = 0; j < 10000; j++) {
+					try {
+						String id = idGen.getNextDateId();
+						System.out.println(id);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				latch.countDown();
+			}).start();
 		}
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("执行耗时:" + (end - begin) / 1000 + "s");
 	}
 
 }
