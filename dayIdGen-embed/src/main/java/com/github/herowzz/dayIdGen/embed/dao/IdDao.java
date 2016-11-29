@@ -32,9 +32,10 @@ public class IdDao {
 		try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement();) {
 			statement.execute(String.format(INI_TABLE, fullTableName));
 			statement.execute(String.format(REPLACE_NEXTID, fullTableName));
-			ResultSet result = statement.executeQuery(SELECT_NEXTID);
-			if (result.next()) {
-				id = result.getLong(1);
+			try (ResultSet result = statement.executeQuery(SELECT_NEXTID)) {
+				if (result.next()) {
+					id = result.getLong(1);
+				}
 			}
 		}
 		return id;
@@ -46,9 +47,10 @@ public class IdDao {
 		try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement();) {
 			statement.execute(String.format(INI_TABLE, fullTableName));
 			statement.execute(String.format(REPLACE_NEXTID, fullTableName));
-			ResultSet result = statement.executeQuery(SELECT_NEXTID);
-			if (result.next()) {
-				id = result.getLong(1);
+			try (ResultSet result = statement.executeQuery(SELECT_NEXTID)) {
+				if (result.next()) {
+					id = result.getLong(1);
+				}
 			}
 		}
 		return id;
@@ -57,14 +59,15 @@ public class IdDao {
 	public int clearIdTables() throws SQLException {
 		List<String> clearTableList = new ArrayList<>();
 		try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement();) {
-			ResultSet result = statement.executeQuery(SELECT_TABLESs);
-			while (result.next()) {
-				String tableName = result.getString(1);
-				String[] strs = tableName.split("_");
-				String date = strs[strs.length - 1];
-				LocalDate tbDate = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
-				if (tbDate.isBefore(LocalDate.now())) {
-					clearTableList.add(tableName);
+			try (ResultSet result = statement.executeQuery(SELECT_TABLESs)) {
+				while (result.next()) {
+					String tableName = result.getString(1);
+					String[] strs = tableName.split("_");
+					String date = strs[strs.length - 1];
+					LocalDate tbDate = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
+					if (tbDate.isBefore(LocalDate.now())) {
+						clearTableList.add(tableName);
+					}
 				}
 			}
 			for (String tableName : clearTableList) {
