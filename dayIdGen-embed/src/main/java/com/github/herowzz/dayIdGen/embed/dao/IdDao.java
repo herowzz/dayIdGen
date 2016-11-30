@@ -26,7 +26,7 @@ public class IdDao {
 		this.dataSource = dataSource;
 	}
 
-	public long getNextId(String tableName) throws SQLException {
+	public long getNextDayId(String tableName) throws SQLException {
 		long id = -1;
 		String fullTableName = "id_" + tableName + "_" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
 		try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement();) {
@@ -41,7 +41,7 @@ public class IdDao {
 		return id;
 	}
 
-	public long getNextDateId(String tableName, LocalDate date) throws SQLException {
+	public long getNextDayId(String tableName, LocalDate date) throws SQLException {
 		long id = -1;
 		String fullTableName = "id_" + tableName + "_" + date.format(DateTimeFormatter.BASIC_ISO_DATE);
 		try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement();) {
@@ -63,10 +63,12 @@ public class IdDao {
 				while (result.next()) {
 					String tableName = result.getString(1);
 					String[] strs = tableName.split("_");
-					String date = strs[strs.length - 1];
-					LocalDate tbDate = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
-					if (tbDate.isBefore(LocalDate.now())) {
-						clearTableList.add(tableName);
+					if (strs.length == 3) {
+						String date = strs[strs.length - 1];
+						LocalDate tbDate = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
+						if (tbDate.isBefore(LocalDate.now())) {
+							clearTableList.add(tableName);
+						}
 					}
 				}
 			}

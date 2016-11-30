@@ -27,13 +27,13 @@ public class DayIdGen {
 	private int minDigit = 3;
 
 	public String getNextId() throws Exception {
-		long id = idDao.getNextId(name);
+		long id = idDao.getNextDayId(name);
 		return prefix + String.format("%0" + minDigit + "d", id);
 	}
 
 	public String getNextDateId() throws Exception {
 		LocalDate now = LocalDate.now();
-		long id = idDao.getNextDateId(name, now);
+		long id = idDao.getNextDayId(name, now);
 		return prefix + now.format(DateTimeFormatter.ofPattern("yyMMdd")) + String.format("%0" + minDigit + "d", id);
 	}
 

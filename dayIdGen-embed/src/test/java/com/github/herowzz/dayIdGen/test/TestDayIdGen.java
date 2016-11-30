@@ -35,6 +35,9 @@ public class TestDayIdGen {
 		idGen.setPrefix("RK");
 		idGen.setName("ccc");
 
+		String id2 = idGen.getNextId();
+		System.out.println(id2);
+
 		CountDownLatch latch = new CountDownLatch(200);
 		long begin = System.currentTimeMillis();
 		for (int i = 0; i < 200; i++) {
