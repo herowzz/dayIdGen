@@ -11,8 +11,13 @@
 	<name>dayIdGen-center</name>
 	<packaging>pom</packaging>
 
+	<properties>
+		<dayIdGenCenter.version>0.0.1-SNAPSHOT</dayIdGenCenter.version>
+	</properties>
+
 	<modules>
 		<module>dayIdGen-center-server</module>
-    <module>dayIdGen-center-common</module>
-  </modules>
+		<module>dayIdGen-center-common</module>
+	</modules>
+	
 </project>
