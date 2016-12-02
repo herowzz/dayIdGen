@@ -30,7 +30,7 @@
 
 	<modules>
 		<module>dayIdGen-embed</module>
-		<module>dayIdGen-server</module>
+		<module>dayIdGen-center</module>
 	</modules>
 
 </project>
